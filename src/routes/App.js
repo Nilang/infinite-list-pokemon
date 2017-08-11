@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   BrowserRouter,
   Route
 } from 'react-router-dom';
 
-// App components
-import Home from './Home'
+// App pages
+import Home from '../pages/Home'
 
 const App = () => (
   <BrowserRouter>
