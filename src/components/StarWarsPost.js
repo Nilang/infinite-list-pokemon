@@ -11,7 +11,7 @@ import ListGroup2Item from './ListGroup2Item';
 
 const StarWars = props => {
   return(
-    <div>
+    <div id={props.lid}>
       <Panel header={props.name}>
         <ListGroup>
           <ListGroup2Item label="Gender" value={props.gender}/>
@@ -23,6 +23,7 @@ const StarWars = props => {
 }
 
 StarWars.propTypes = {
+  lid: PropTypes.string,
   name: PropTypes.string.isRequired,
   birth_year: PropTypes.string.isRequired,
   gender: PropTypes.string.isRequired
