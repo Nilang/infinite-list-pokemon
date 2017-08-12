@@ -5,10 +5,14 @@ body {
   font-family: sans-serif;
 }
 
-.container{
-  max-width: 30rem;
+.main_container{
+  max-width: 35rem;
   flex: 1 1 0%;
   margin: 10px auto;
+}
+
+.container{
+  width: auto;
 }
 
 .panel-body{

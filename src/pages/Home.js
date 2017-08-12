@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import QueryString from 'query-string';
+import { LinkContainer } from 'react-router-bootstrap';
 import {
   ListGroup,
   ListGroupItem
@@ -7,28 +9,32 @@ import {
 
 export default class Home extends Component {
 
+  static propTypes: {
+    addPokemon: PropTypes.func.isRequired,
+    pokemons: PropTypes.array.isRequired
+  };
+
   constructor(){
     super();
     this.state = {
-      pokemons: [],
       next: ""
     };
     this.handleScroll = this.handleScroll.bind(this);
   };
 
   requestPokemons = (targetUrl) => {
-    var option = {
-      mode: "no-cors"
-    };
-    fetch(targetUrl)
+    fetch(targetUrl, {
+      headers: {
+        'User-agent': 'your bot 0.1'
+      }
+    })
       .then(response => response.json())
       .then(responseData => {
         console.log(responseData);
         responseData.results.map((pokemon, index) => {
-          this.state.pokemons.push(pokemon);
+          this.props.addPokemon(pokemon);
         });
         this.setState({
-          pokemons: this.state.pokemons,
           next: responseData.next
          });
       })
@@ -38,6 +44,12 @@ export default class Home extends Component {
   };
 
   componentDidMount(){
+    // var search = QueryString.parse(this.props.location.search);
+    // if(search.filter !== undefined){
+    //
+    // }else{
+    //   this.requestPokemons('http://pokeapi.salestock.net/api/v2/pokemon/');
+    // }
     this.requestPokemons('http://pokeapi.salestock.net/api/v2/pokemon/');
     window.addEventListener("scroll", this.handleScroll);
   };
@@ -62,16 +74,28 @@ export default class Home extends Component {
   }
 
   render(){
-    return(
-      <div>
-        <ListGroup>
-          {this.state.pokemons.map((pokemon, index) => {
-            return(
-              <ListGroupItem key={index} href="#">{pokemon.name}</ListGroupItem>
-            );
-          })}
-        </ListGroup>
-      </div>
-    );
+    if (this.props.pokemons !== undefined) {
+      return(
+        <div>
+          <ListGroup>
+            {this.props.pokemons.map((pokemon, index) => {
+              return(
+                <LinkContainer key={index} to={'/pokemon/'+(index+1)}>
+                  <ListGroupItem>
+                    {pokemon.name}
+                  </ListGroupItem>
+                </LinkContainer>
+              );
+            })}
+          </ListGroup>
+        </div>
+      );
+    }else{
+      return(
+        <div>
+          Loading...
+        </div>
+      );
+    }
   }
 };

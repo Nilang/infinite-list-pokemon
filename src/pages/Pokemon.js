@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 // App Component
-import PokemonPost from '../components/PokemonPost'
+import Header from '../components/Header.js'
+import PokemonPost from '../components/PokemonPost';
 
 export default class Pokemon extends Component {
 
@@ -32,22 +33,24 @@ export default class Pokemon extends Component {
   };
 
   render(){
-    if (this.state.pokemon.id != undefined){
-      return(
-        <div>
-          <PokemonPost
-            id={this.state.pokemon.id}
-            name={this.state.pokemon.name}
-            image={this.state.pokemon.sprites.front_default}
-            base_experience={this.state.pokemon.base_experience}
-            height={this.state.pokemon.height}
-            />
-        </div>
-      );
+    let pokepost = null;
+    if(this.state.pokemon.id != undefined){
+      pokepost = <PokemonPost
+        id={this.state.pokemon.id}
+        name={this.state.pokemon.name}
+        image={this.state.pokemon.sprites.front_default}
+        base_experience={this.state.pokemon.base_experience}
+        height={this.state.pokemon.height}
+        />;
+    }else{
+      pokepost = <h5>Loading...</h5>
     }
-    return(
+
+    return (
       <div>
-        Loading...
+        <div>
+          {pokepost}
+        </div>
       </div>
     );
   }
