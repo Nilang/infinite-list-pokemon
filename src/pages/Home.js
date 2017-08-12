@@ -1,36 +1,38 @@
 import React, { Component, ExecutionEnvironment } from 'react';
-
-// App Component
-import StarWarsPost from '../components/StarWarsPost'
+import PokeApi from 'pokeapi';
+import {
+  ListGroup,
+  ListGroupItem
+ } from 'react-bootstrap';
 
 export default class Home extends Component {
 
   constructor(){
     super();
     this.state = {
-      peoples: [],
+      pokemons: [],
       next: ""
     };
     this.handleScroll = this.handleScroll.bind(this);
   }
 
-  requestPeople = (targetUrl) => {
+  requestPokemons = (targetUrl) => {
     fetch(targetUrl)
       .then(response => response.json())
       .then(responseData => {
         console.log(responseData);
-        responseData.results.map((people, index) => {
-          this.state.peoples.push(people);
+        responseData.results.map((pokemon, index) => {
+          this.state.pokemons.push(pokemon);
         });
         this.setState({
-          peoples: this.state.peoples,
+          pokemons: this.state.pokemons,
           next: responseData.next
          });
       });
   };
 
   componentDidMount(){
-    this.requestPeople('https://swapi.co/api/people/');
+    this.requestPokemons('http://pokeapi.salestock.net/api/v2/pokemon/');
     window.addEventListener("scroll", this.handleScroll);
   };
 
@@ -46,8 +48,7 @@ export default class Home extends Component {
     const windowBottom = windowHeight + window.pageYOffset;
     if (windowBottom >= docHeight) {
       // Bottom reached
-      console.log('Bottom reached');
-      this.requestPeople(this.state.next);
+      this.requestPokemons(this.state.next);
     } else {
       // Not yet
 
@@ -57,27 +58,17 @@ export default class Home extends Component {
   render(){
     return(
       <div>
-        <div className="header">
-          Header
-        </div>
-        <div className="body">
-          <div className="list_container">
-            {this.state.peoples.map((people, index) => {
-              var lastid;
-              if (index === (this.state.peoples.length - 1)){
-                lastid = "lastChild"
-              }
-              return(
-                <StarWarsPost
-                  lid = {lastid}
-                  name={people.name}
-                  gender={people.gender}
-                  birth_year={people.birth_year}
-                  />
-              );
-            })}
-          </div>
-        </div>
+        <ListGroup>
+          {this.state.pokemons.map((pokemon, index) => {
+            var lastid;
+            if (index === (this.state.pokemons.length - 1)){
+              lastid = "lastChild"
+            }
+            return(
+              <ListGroupItem href="#">{pokemon.name}</ListGroupItem>
+            );
+          })}
+        </ListGroup>
       </div>
     );
   }
