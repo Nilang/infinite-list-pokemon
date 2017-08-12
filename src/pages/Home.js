@@ -1,5 +1,5 @@
-import React, { Component, ExecutionEnvironment } from 'react';
-import PokeApi from 'pokeapi';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   ListGroup,
   ListGroupItem
@@ -14,9 +14,12 @@ export default class Home extends Component {
       next: ""
     };
     this.handleScroll = this.handleScroll.bind(this);
-  }
+  };
 
   requestPokemons = (targetUrl) => {
+    var option = {
+      mode: "no-cors"
+    };
     fetch(targetUrl)
       .then(response => response.json())
       .then(responseData => {
@@ -28,6 +31,9 @@ export default class Home extends Component {
           pokemons: this.state.pokemons,
           next: responseData.next
          });
+      })
+      .catch((error) => {
+        console.error(error);
       });
   };
 
@@ -60,12 +66,8 @@ export default class Home extends Component {
       <div>
         <ListGroup>
           {this.state.pokemons.map((pokemon, index) => {
-            var lastid;
-            if (index === (this.state.pokemons.length - 1)){
-              lastid = "lastChild"
-            }
             return(
-              <ListGroupItem href="#">{pokemon.name}</ListGroupItem>
+              <ListGroupItem key={index} href="#">{pokemon.name}</ListGroupItem>
             );
           })}
         </ListGroup>

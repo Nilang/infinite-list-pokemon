@@ -1,20 +1,28 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   BrowserRouter,
-  Route
+  Route,
+  Switch
 } from 'react-router-dom';
 
 // App pages
 import Home from '../pages/Home';
 import Pokemon from '../pages/Pokemon';
+import NotFound from '../pages/NotFound';
 
-const App = () => (
-  <BrowserRouter>
-    <div className="container">
-      <Route exact path="/" render={ () => <Home /> } />
-      <Route path="/pokemon" render={ () => <Pokemon /> } />
-    </div>
-  </BrowserRouter>
-);
-
-export default App;
+export default class App extends Component {
+  render(){
+    return(
+      <BrowserRouter>
+        <div className="container">
+          <Switch>
+            <Route exact path="/" component={Home}/>
+            <Route exact path="/pokemon" component={Home}/>
+            <Route path="/pokemon/:id" component={Pokemon} />
+            <Route component={NotFound} />
+          </Switch>
+        </div>
+      </BrowserRouter>
+    );
+  }
+};
