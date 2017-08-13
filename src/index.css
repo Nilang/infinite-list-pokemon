@@ -6,15 +6,102 @@ body {
 }
 
 .main_container{
-  max-width: 35rem;
+  max-width: 37.5rem;
   flex: 1 1 0%;
   margin: 10px auto;
   margin-top: 7rem;
 }
 
 .container{
-  max-width: 35rem;
+  max-width: 37.5rem;
   padding: 0;
+}
+
+.badge__type{
+  margin-right: 5px;
+  margin-top: 3px;
+  font-weight: normal;
+  padding: 5px 10px;
+}
+
+.badge__type-normal{
+  background: #FFC107;
+}
+
+.badge__type-fighting{
+  background: #009688;
+}
+
+.badge__type-flying{
+  background: #536DFE;
+}
+
+.badge__type-poison{
+  background: #689F38;
+}
+
+.badge__type-ground{
+  background: #795548;
+}
+
+.badge__type-rock{
+  background: #3E2723;
+}
+
+.badge__type-bug{
+  background: #FFB300;
+}
+
+.badge__type-ghost{
+  background: #673AB7;
+}
+
+.badge__type-steel{
+  background: #757575;
+}
+
+.badge__type-fire{
+  background: #F44336;
+}
+
+.badge__type-water{
+  background: #3F51B5;
+}
+
+.badge__type-grass{
+  background: #43A047;
+}
+
+.badge__type-electric{
+  background: #FDD835;
+}
+
+.badge__type-psychic{
+  background: #651FFF;
+}
+
+.badge__type-ice{
+  background: #2196F3;
+}
+
+.badge__type-dragon{
+  background: #FF1744;
+}
+
+.badge__type-dark{
+  background: #212121;
+}
+
+.badge__type-fairy{
+  background: #FF4081;
+}
+
+.badge__type-unknown{
+  background: #607D8B;
+}
+
+.badge__type-shadow{
+  background: #37474F;
 }
 
 .panel-body{

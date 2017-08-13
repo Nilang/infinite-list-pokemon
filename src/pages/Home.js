@@ -7,9 +7,11 @@ import {
   ListGroupItem
  } from 'react-bootstrap';
 
+ import Pokemon from './Pokemon';
+
 export default class Home extends Component {
 
-  static propTypes: {
+  static propTypes= {
     requestPokemons: PropTypes.func.isRequired,
     pokemons: PropTypes.array.isRequired,
     next: PropTypes.string.isRequired
@@ -24,11 +26,11 @@ export default class Home extends Component {
   };
 
   handleScroll = () => {
-    // console.log("innerH, "+window.innerHeight);
-    // console.log("scrollY, "+window.scrollY);
-    // console.log("offset, "+document.body.offsetHeight);
-    // console.log("dscrolltop ,"+document.body.scrollTop);
-    // console.log("dscrollheight ,"+document.body.scrollHeight);
+    console.log("innerH, "+window.innerHeight);
+    console.log("scrollY, "+window.scrollY);
+    console.log("offset, "+document.body.offsetHeight);
+    console.log("dscrolltop ,"+document.body.scrollTop);
+    console.log("dscrollheight ,"+document.body.scrollHeight);
     if((document.body.scrollTop+window.innerHeight) === document.body.scrollHeight){
       this.props.requestPokemons(this.props.next);
     }
@@ -47,6 +49,9 @@ export default class Home extends Component {
                   </ListGroupItem>
                 </LinkContainer>
               );
+              // return(
+              //   <Pokemon key="pokemon="+index pokeUrl={pokemon.url}/>
+              // );
             })}
           </ListGroup>
         </div>

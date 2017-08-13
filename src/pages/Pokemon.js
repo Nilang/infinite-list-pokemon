@@ -7,6 +7,10 @@ import PokemonPost from '../components/PokemonPost';
 
 export default class Pokemon extends Component {
 
+  static propTypes = {
+    pokeUrl: PropTypes.string
+  };
+
   constructor(){
     super();
     this.state = {
@@ -29,7 +33,11 @@ export default class Pokemon extends Component {
   };
 
   componentDidMount(){
-    this.requestPokemon('http://pokeapi.salestock.net/api/v2/pokemon/'+this.props.match.params.id+'/');
+    if(this.props.match !== undefined){
+      this.requestPokemon('http://pokeapi.salestock.net/api/v2/pokemon/'+this.props.match.params.id+'/');
+    }else if(this.props.pokeUrl !== undefined){
+      this.requestPokemon(this.props.pokeUrl);
+    }
   };
 
   render(){
@@ -42,6 +50,8 @@ export default class Pokemon extends Component {
         image={this.state.pokemon.sprites.front_default}
         base_experience={this.state.pokemon.base_experience}
         height={this.state.pokemon.height}
+        weight={this.state.pokemon.weight}
+        types={this.state.pokemon.types}
         />;
     }else{
       pokepost = <h5>Loading...</h5>

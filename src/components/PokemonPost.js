@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
+  Badge,
+  Button,
+  ButtonToolbar,
   Panel,
   Image,
   ListGroup
@@ -18,8 +21,19 @@ const PokemonPost = props => {
           <ListGroup2Item label="ID" value={props.id.toString()}/>
           <ListGroup2Item label="Name" value={props.name}/>
           <ListGroup2Item label="Height" value={props.height.toString()}/>
+          <ListGroup2Item label="Weight" value={props.weight.toString()}/>
           <ListGroup2Item label="Base Experience" value={props.base_experience.toString()}/>
         </ListGroup>
+        <div>
+          <h5>Type</h5>
+          <ButtonToolbar>
+            {props.types.map((type, index) => {
+              return(
+                <Badge key={"badge_"+index} className={"badge__type badge__type-"+type.type.name}>{type.type.name}</Badge>
+              );
+            })}
+          </ButtonToolbar>
+        </div>
       </Panel>
     </div>
   );
@@ -32,7 +46,9 @@ PokemonPost.propTypes = {
   is_default: PropTypes.bool,
   image: PropTypes.string,
   lid: PropTypes.string,
-  name: PropTypes.string
+  name: PropTypes.string,
+  types: PropTypes.array,
+  weight: PropTypes.number
 };
 
 export default PokemonPost;
