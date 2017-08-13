@@ -33,7 +33,6 @@ class App extends Component {
   };
 
   requestPokemons = (targetUrl) => {
-    this.setState({typeUrl: ""});
     fetch(targetUrl)
       .then(response => response.json())
       .then(responseData => {
@@ -70,23 +69,17 @@ class App extends Component {
     this.requestPokemons('http://pokeapi.salestock.net/api/v2/pokemon/');
   }
 
-  testingpoke = (next) => {
-    console.log("boom "+next);
-    this.setState({
-      next: this.state.next+next
-    });
-  };
-
   render(){
     const { dispatch, pokemons } = this.props;
     const addPokemon = bindActionCreators(PokemonActionCreators.addPokemon, dispatch);
     const removePokemon = bindActionCreators(PokemonActionCreators.removePokemon, dispatch);
+    const clearPokemon = bindActionCreators(PokemonActionCreators.clearPokemon, dispatch);
 
     return(
       <div>
         <BrowserRouter>
           <div className="main_container">
-            <Header refreshPokemons={this.refreshPokemons.bind(this)}/>
+            <Header refreshPokemons={this.refreshPokemons.bind(this)} requestPokemons={this.requestPokemons.bind(this)} clearPokemon={clearPokemon} />
             <Switch>
               <Route exact path="/" component={ (props) => <Home {...props} pokemons={pokemons} requestPokemons={this.requestPokemons.bind(this)} next={this.state.next}/> }/>
               <Route exact path="/pokemon" component={Pokemons}/>

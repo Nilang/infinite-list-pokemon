@@ -17,6 +17,10 @@ body {
   padding: 0;
 }
 
+.footer_container{
+  text-align: center;
+}
+
 .badge__type{
   margin-right: 5px;
   margin-top: 3px;

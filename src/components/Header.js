@@ -18,7 +18,9 @@ import {
 export default class Header extends Component {
 
   static propTypes = {
-    refreshPokemons: PropTypes.func.isRequired
+    refreshPokemons: PropTypes.func.isRequired,
+    clearPokemon: PropTypes.func.isRequired,
+    requestPokemons: PropTypes.func.isRequired
   };
 
   constructor(){
@@ -45,7 +47,12 @@ export default class Header extends Component {
 
   onSelectChange = (event) => {
     let typeUrl = event.target.value;
-    this.props.refreshPokemons(typeUrl);
+    if(typeUrl === "all"){
+      this.props.clearPokemon();
+      this.props.requestPokemons("http://pokeapi.salestock.net/api/v2/pokemon/");
+    }else{
+      this.props.refreshPokemons(typeUrl);
+    }
   };
 
   componentDidMount(){
@@ -79,7 +86,7 @@ export default class Header extends Component {
                   placeholder="select type"
                   onChange={this.onSelectChange.bind(this)}
                   >
-                  <option value="/select/">select</option>
+                  <option value="all">All</option>
                   {this.state.types.map((type, index) => {
                     return(
                       <option key={'select_'+index} value={type.url}>{type.name}</option>

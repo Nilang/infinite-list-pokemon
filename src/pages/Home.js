@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import QueryString from 'query-string';
 import { LinkContainer } from 'react-router-bootstrap';
 import {
+  Button,
   ListGroup,
   ListGroupItem
  } from 'react-bootstrap';
@@ -25,12 +26,16 @@ export default class Home extends Component {
     window.removeEventListener('scroll', this.handleScroll);
   };
 
+  handleButton = () => {
+    this.props.requestPokemons(this.props.next);
+  };
+
   handleScroll = () => {
-    console.log("innerH, "+window.innerHeight);
-    console.log("scrollY, "+window.scrollY);
-    console.log("offset, "+document.body.offsetHeight);
-    console.log("dscrolltop ,"+document.body.scrollTop);
-    console.log("dscrollheight ,"+document.body.scrollHeight);
+    // console.log("innerH, "+window.innerHeight);
+    // console.log("scrollY, "+window.scrollY);
+    // console.log("offset, "+document.body.offsetHeight);
+    // console.log("dscrolltop ,"+document.body.scrollTop);
+    // console.log("dscrollheight ,"+document.body.scrollHeight);
     if((document.body.scrollTop+window.innerHeight) === document.body.scrollHeight){
       this.props.requestPokemons(this.props.next);
     }
@@ -54,6 +59,9 @@ export default class Home extends Component {
               // );
             })}
           </ListGroup>
+          <div className="footer_container">
+            <Button ref="button_more" onClick={this.handleButton.bind(this)}>See more</Button>
+          </div>
         </div>
       );
     }else{
