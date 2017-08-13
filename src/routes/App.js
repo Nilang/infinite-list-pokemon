@@ -11,6 +11,7 @@ import {
 
 // App pages
 import Home from '../pages/Home';
+import Type from '../pages/Type';
 import Pokemon from '../pages/Pokemon';
 import Pokemons from '../pages/Pokemons';
 import NotFound from '../pages/NotFound';
@@ -23,8 +24,7 @@ class App extends Component {
   constructor(){
     super();
     this.state = {
-      next: "",
-      refresh: ""
+      next: ""
     };
   };
 
@@ -33,6 +33,7 @@ class App extends Component {
   };
 
   requestPokemons = (targetUrl) => {
+    this.setState({typeUrl: ""});
     fetch(targetUrl)
       .then(response => response.json())
       .then(responseData => {
@@ -49,7 +50,23 @@ class App extends Component {
       });
   };
 
-  componentDidMount(){
+  refreshPokemons = (typeUrl) => {
+    this.props.dispatch(PokemonActionCreators.clearPokemon());
+    console.log("clearPokemon");
+    fetch(typeUrl)
+      .then(response => response.json())
+      .then(responseData => {
+        console.log(responseData);
+        responseData.pokemon.map((pokemon, index) => {
+          this.props.dispatch(PokemonActionCreators.addPokemon(pokemon.pokemon));
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  componentWillMount(){
     this.requestPokemons('http://pokeapi.salestock.net/api/v2/pokemon/');
   }
 
@@ -69,7 +86,7 @@ class App extends Component {
       <div>
         <BrowserRouter>
           <div className="main_container">
-            <Header refresh={this.state.refresh}/>
+            <Header refreshPokemons={this.refreshPokemons.bind(this)}/>
             <Switch>
               <Route exact path="/" component={ (props) => <Home {...props} pokemons={pokemons} requestPokemons={this.requestPokemons.bind(this)} next={this.state.next}/> }/>
               <Route exact path="/pokemon" component={Pokemons}/>

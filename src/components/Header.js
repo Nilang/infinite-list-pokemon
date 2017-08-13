@@ -18,16 +18,41 @@ import {
 export default class Header extends Component {
 
   static propTypes = {
-    refresh: PropTypes.string
+    refreshPokemons: PropTypes.func.isRequired
   };
 
   constructor(){
     super();
     this.state = {
       collapsestat: false,
-      type: []
+      types: []
     };
-  }
+  };
+
+  requestTypes = (targetUrl) => {
+    fetch(targetUrl)
+      .then(response => response.json())
+      .then(responseData => {
+        console.log(responseData);
+        this.setState({
+          types: responseData.results
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  onSelectChange = (event) => {
+    let typeUrl = event.target.value;
+    this.props.refreshPokemons(typeUrl);
+  };
+
+  componentDidMount(){
+    this.requestTypes('http://pokeapi.salestock.net/api/v2/type/');
+  };
+
+
 
   render(){
     return(
@@ -49,9 +74,17 @@ export default class Header extends Component {
             <Panel>
               <FormGroup controlId="formControlsSelect">
                 <ControlLabel>Type</ControlLabel>
-                <FormControl componentClass="select" placeholder="select">
-                  <option value="select">select</option>
-                  <option value="other">...</option>
+                <FormControl
+                  componentClass="select"
+                  placeholder="select type"
+                  onChange={this.onSelectChange.bind(this)}
+                  >
+                  <option value="/select/">select</option>
+                  {this.state.types.map((type, index) => {
+                    return(
+                      <option key={'select_'+index} value={type.url}>{type.name}</option>
+                    );
+                  })}
                 </FormControl>
               </FormGroup>
             </Panel>
