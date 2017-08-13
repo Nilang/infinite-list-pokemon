@@ -34,7 +34,8 @@ export default class Pokemon extends Component {
 
   render(){
     let pokepost = null;
-    if(this.state.pokemon.id != undefined){
+
+    if(this.state.pokemon.id !== undefined){
       pokepost = <PokemonPost
         id={this.state.pokemon.id}
         name={this.state.pokemon.name}
