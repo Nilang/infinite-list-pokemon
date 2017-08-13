@@ -29,8 +29,7 @@ export default class Header extends Component {
             <Navbar.Brand>
               <Link to="/">Pokedex</Link>
             </Navbar.Brand>
-            <Navbar.Toggle/>
-          </Navbar.Header>
+            <Navbar.Toggle/>          </Navbar.Header>
           <Navbar.Collapse>
             <Nav pullRight>
               <NavItem onClick={ () => this.setState({ collapsestat: !this.state.collapsestat }) }>Filter</NavItem>
