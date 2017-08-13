@@ -15,18 +15,24 @@ export default class Home extends Component {
     next: PropTypes.string.isRequired
   };
 
-  constructor(){
-    super();
-    this.handleScroll = this.handleScroll.bind(this);
+  componentDidMount(){
+    window.addEventListener('scroll', this.handleScroll);
   };
 
   componentWillUnmount(){
-    window.removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener('scroll', this.handleScroll);
   };
 
-  handleScroll(){
-    
-  }
+  handleScroll = () => {
+    // console.log("innerH, "+window.innerHeight);
+    // console.log("scrollY, "+window.scrollY);
+    // console.log("offset, "+document.body.offsetHeight);
+    // console.log("dscrolltop ,"+document.body.scrollTop);
+    // console.log("dscrollheight ,"+document.body.scrollHeight);
+    if((document.body.scrollTop+window.innerHeight) === document.body.scrollHeight){
+      this.props.requestPokemons(this.props.next);
+    }
+  };
 
   render(){
     if (this.props.pokemons !== undefined) {
@@ -52,5 +58,5 @@ export default class Home extends Component {
         </div>
       );
     }
-  }
+  };
 };

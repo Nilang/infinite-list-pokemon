@@ -53,6 +53,13 @@ class App extends Component {
     this.requestPokemons('http://pokeapi.salestock.net/api/v2/pokemon/');
   }
 
+  testingpoke = (next) => {
+    console.log("boom "+next);
+    this.setState({
+      next: this.state.next+next
+    });
+  };
+
   render(){
     const { dispatch, pokemons } = this.props;
     const addPokemon = bindActionCreators(PokemonActionCreators.addPokemon, dispatch);
@@ -64,7 +71,7 @@ class App extends Component {
           <div className="main_container">
             <Header refresh={this.state.refresh}/>
             <Switch>
-              <Route exact path="/" component={ (props) => <Home {...props} pokemons={pokemons} requestPokemons={this.requestPokemons} next={this.state.next}/> }/>
+              <Route exact path="/" component={ (props) => <Home {...props} pokemons={pokemons} requestPokemons={this.requestPokemons.bind(this)} next={this.state.next}/> }/>
               <Route exact path="/pokemon" component={Pokemons}/>
               <Route path="/pokemon/:id" component={Pokemon} />
               <Route component={NotFound} />
