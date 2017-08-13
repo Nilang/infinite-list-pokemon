@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Provider } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as PokemonActionCreators from '../actions/pokemon';
@@ -31,19 +32,19 @@ class App extends Component {
 
     return(
 
-      <div>
+      <Provider store={this.props.store}>
         <BrowserRouter>
           <div className="main_container">
             <Header />
             <Switch>
-              <Route exact path="/" component={ (props) => <Home {...props} pokemons={pokemons} addPokemon={addPokemon} /> }/>
+              <Route exact path="/" component={ (props) => <Home {...props} pokemons={pokemons} addPokemon={addPokemon}/> }/>
               <Route exact path="/pokemon" component={Pokemons}/>
               <Route path="/pokemon/:id" component={Pokemon} />
               <Route component={NotFound} />
             </Switch>
           </div>
         </BrowserRouter>
-      </div>
+      </Provider>
     );
   }
 };

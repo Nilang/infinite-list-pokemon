@@ -20,14 +20,11 @@ export default class Home extends Component {
       next: ""
     };
     this.handleScroll = this.handleScroll.bind(this);
+    // this.requestPokemons('http://pokeapi.salestock.net/api/v2/pokemon/');
   };
 
   requestPokemons = (targetUrl) => {
-    fetch(targetUrl, {
-      headers: {
-        'User-agent': 'your bot 0.1'
-      }
-    })
+    fetch(targetUrl)
       .then(response => response.json())
       .then(responseData => {
         console.log(responseData);
@@ -43,6 +40,10 @@ export default class Home extends Component {
       });
   };
 
+  testingPokemon = () => {
+    this.props.addPokemon({name:"testing"});
+  }
+
   componentDidMount(){
     // var search = QueryString.parse(this.props.location.search);
     // if(search.filter !== undefined){
@@ -50,7 +51,11 @@ export default class Home extends Component {
     // }else{
     //   this.requestPokemons('http://pokeapi.salestock.net/api/v2/pokemon/');
     // }
-    this.requestPokemons('http://pokeapi.salestock.net/api/v2/pokemon/');
+    console.log(this.props.pokemons[0]);
+    if (this.props.pokemons[0] === undefined){
+      this.testingPokemon();
+      console.log("weew");
+    }
     window.addEventListener("scroll", this.handleScroll);
   };
 
@@ -64,9 +69,13 @@ export default class Home extends Component {
     const html = document.documentElement;
     const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight);
     const windowBottom = windowHeight + window.pageYOffset;
+    console.log("bot, "+windowBottom);
+    console.log("doc, "+docHeight);
     if (windowBottom >= docHeight) {
       // Bottom reached
-      this.requestPokemons(this.state.next);
+      // this.requestPokemons(this.state.next);
+      console.log("reach bottom");
+      this.testingPokemon();
     } else {
       // Not yet
 
@@ -74,6 +83,7 @@ export default class Home extends Component {
   }
 
   render(){
+
     if (this.props.pokemons !== undefined) {
       return(
         <div>
