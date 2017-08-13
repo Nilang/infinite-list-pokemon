@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {
   Button,
   Collapse,
+  ControlLabel,
+  FormControl,
   FormGroup,
   MenuItem,
   Nav,
@@ -14,10 +17,15 @@ import {
 
 export default class Header extends Component {
 
+  static propTypes = {
+    refresh: PropTypes.string
+  };
+
   constructor(){
     super();
     this.state = {
-      collapsestat: false
+      collapsestat: false,
+      type: []
     };
   }
 
@@ -39,7 +47,13 @@ export default class Header extends Component {
         <Collapse in={this.state.collapsestat}>
           <div>
             <Panel>
-              This form for filter.
+              <FormGroup controlId="formControlsSelect">
+                <ControlLabel>Type</ControlLabel>
+                <FormControl componentClass="select" placeholder="select">
+                  <option value="select">select</option>
+                  <option value="other">...</option>
+                </FormControl>
+              </FormGroup>
             </Panel>
           </div>
         </Collapse>

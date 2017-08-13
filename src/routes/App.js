@@ -23,7 +23,8 @@ class App extends Component {
   constructor(){
     super();
     this.state = {
-      next: ""
+      next: "",
+      refresh: ""
     };
   };
 
@@ -48,13 +49,8 @@ class App extends Component {
       });
   };
 
-  testingPokemon(targetUrL){
-    this.props.dispatch(PokemonActionCreators.addPokemon({name: "testing"}));
-  }
-
   componentDidMount(){
     this.requestPokemons('http://pokeapi.salestock.net/api/v2/pokemon/');
-    // this.testingPokemon("testing");
   }
 
   render(){
@@ -63,11 +59,10 @@ class App extends Component {
     const removePokemon = bindActionCreators(PokemonActionCreators.removePokemon, dispatch);
 
     return(
-
       <div>
         <BrowserRouter>
           <div className="main_container">
-            <Header />
+            <Header refresh={this.state.refresh}/>
             <Switch>
               <Route exact path="/" component={ (props) => <Home {...props} pokemons={pokemons} requestPokemons={this.requestPokemons} next={this.state.next}/> }/>
               <Route exact path="/pokemon" component={Pokemons}/>

@@ -9,11 +9,12 @@ body {
   max-width: 35rem;
   flex: 1 1 0%;
   margin: 10px auto;
-  margin-top: 1rem;
+  margin-top: 7rem;
 }
 
 .container{
-  width: auto;
+  max-width: 35rem;
+  padding: 0;
 }
 
 .panel-body{

@@ -13,3 +13,9 @@ export const removePokemon = index => {
     index
   };
 };
+
+export const clearPokemon = () => {
+  return {
+    type: PokemonActionTypes.CLEAR_POKEMON
+  };
+};

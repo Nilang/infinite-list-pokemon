@@ -16,6 +16,9 @@ export default function Pokemon(state=initialState, action){
         ...state.slice(action.index + 1)
       ];
 
+    case PokemonActionTypes.CLEAR_POKEMON:
+      return[];
+
     default:
       return state;
   }
