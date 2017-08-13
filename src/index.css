@@ -9,6 +9,7 @@ body {
   max-width: 35rem;
   flex: 1 1 0%;
   margin: 10px auto;
+  margin-top: 1rem;
 }
 
 .container{

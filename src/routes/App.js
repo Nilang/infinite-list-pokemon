@@ -20,9 +20,42 @@ import Header from '../components/Header';
 
 class App extends Component {
 
+  constructor(){
+    super();
+    this.state = {
+      next: ""
+    };
+  };
+
   static propTypes = {
     pokemons: PropTypes.array.isRequired
   };
+
+  requestPokemons = (targetUrl) => {
+    fetch(targetUrl)
+      .then(response => response.json())
+      .then(responseData => {
+        console.log(responseData);
+        responseData.results.map((pokemon, index) => {
+          this.props.dispatch(PokemonActionCreators.addPokemon(pokemon));
+        });
+        this.setState({
+          next: responseData.next
+         });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  testingPokemon(targetUrL){
+    this.props.dispatch(PokemonActionCreators.addPokemon({name: "testing"}));
+  }
+
+  componentDidMount(){
+    this.requestPokemons('http://pokeapi.salestock.net/api/v2/pokemon/');
+    // this.testingPokemon("testing");
+  }
 
   render(){
     const { dispatch, pokemons } = this.props;
@@ -36,7 +69,7 @@ class App extends Component {
           <div className="main_container">
             <Header />
             <Switch>
-              <Route exact path="/" component={ (props) => <Home {...props} pokemons={pokemons} addPokemon={addPokemon} /> }/>
+              <Route exact path="/" component={ (props) => <Home {...props} pokemons={pokemons} requestPokemons={this.requestPokemons} next={this.state.next}/> }/>
               <Route exact path="/pokemon" component={Pokemons}/>
               <Route path="/pokemon/:id" component={Pokemon} />
               <Route component={NotFound} />

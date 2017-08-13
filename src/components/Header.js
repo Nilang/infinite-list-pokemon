@@ -24,7 +24,7 @@ export default class Header extends Component {
   render(){
     return(
       <div>
-        <Navbar>
+        <Navbar fixedTop>
           <Navbar.Header>
             <Navbar.Brand>
               <Link to="/">Pokedex</Link>
