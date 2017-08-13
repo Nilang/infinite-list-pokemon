@@ -41,7 +41,7 @@ export default class Home extends Component {
           <ListGroup>
             {this.props.pokemons.map((pokemon, index) => {
               return(
-                <LinkContainer key={index} to={'/pokemon/'+(index+1)}>
+                <LinkContainer key={index} to={pokemon.url.replace('http://pokeapi.salestock.net/api/v2','')}>
                   <ListGroupItem>
                     {pokemon.name}
                   </ListGroupItem>
