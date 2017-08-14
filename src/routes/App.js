@@ -6,6 +6,7 @@ import * as PokemonActionCreators from '../actions/pokemon';
 import PropTypes from 'prop-types';
 import {
   BrowserRouter,
+  Redirect,
   Route,
   Switch
 } from 'react-router-dom';
@@ -13,7 +14,7 @@ import {
 // App pages
 import Home from '../pages/Home';
 import Pokemon from '../pages/Pokemon';
-import Pokemons from '../pages/Pokemons';
+import AllPokemon from '../pages/AllPokemon';
 import NotFound from '../pages/NotFound';
 
 // App Component
@@ -100,7 +101,7 @@ class App extends Component {
     if (this.next === undefined || this.next === null){
       this.totalReqUrl = count;
     }else{
-      let hold = this.next.replace('http://pokeapi.salestock.net/api/v2/pokemon/?offset=','');
+      let hold = this.next.replace('https://pokeapi.salestock.net/api/v2/pokemon/?offset=','');
       let percent = (hold/count) * 100;
       if (this.refs.progress) {
         this.setState({
@@ -128,7 +129,8 @@ class App extends Component {
               <Switch>
 
                 <Route exact path="/" component={ (props) => <Home {...props} pokemons={pokemons} requestPokemonUrl={this.requestPokemonUrl.bind(this)}/> }/>
-                <Route exact path="/pokemon/" component={ (props) => <Pokemons {...props} pokemons={pokemons} requestAllPokemonUrl={this.requestAllPokemonUrl.bind(this)} postPerReq={3} initialPost={3}/> }/>
+                <Route exact path="/allpokemon/" component={ (props) => <AllPokemon {...props} pokemons={pokemons} requestAllPokemonUrl={this.requestAllPokemonUrl.bind(this)} postPerReq={3} initialPost={3}/> }/>
+                <Route exact path="/pokemon" component={ () => <Redirect to="/"/> } />
                 <Route path="/pokemon/:id" component={Pokemon} />
                 <Route path="/loading/" component={LoadingPage} />
                 <Route component={NotFound} />

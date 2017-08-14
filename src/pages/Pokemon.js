@@ -36,7 +36,7 @@ export default class Pokemon extends Component {
 
   componentDidMount(){
     if(this.props.match !== undefined){
-      this.requestPokemon('http://pokeapi.salestock.net/api/v2/pokemon/'+this.props.match.params.id+'/');
+      this.requestPokemon('https://pokeapi.salestock.net/api/v2/pokemon/'+this.props.match.params.id+'/');
     }else if(this.props.pokeUrl !== undefined){
       this.requestPokemon(this.props.pokeUrl);
     }

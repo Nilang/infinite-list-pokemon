@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { LinkContainer } from 'react-router-bootstrap';
 import {Link} from 'react-router-dom';
 import {
+  Badge,
   Collapse,
   ControlLabel,
   FormControl,
@@ -54,12 +55,12 @@ export default class Header extends Component {
   requestAllPokemon = () => {
     if(this.props.urlStat !== 1){
       this.props.clearPokemon();
-      this.props.requestAllPokemonUrl("http://pokeapi.salestock.net/api/v2/pokemon/");
+      this.props.requestAllPokemonUrl("https://pokeapi.salestock.net/api/v2/pokemon/");
     }
   };
 
   componentDidMount(){
-    this.requestTypes('http://pokeapi.salestock.net/api/v2/type/');
+    this.requestTypes('https://pokeapi.salestock.net/api/v2/type/');
   };
 
 
@@ -76,8 +77,12 @@ export default class Header extends Component {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav pullRight>
-              <LinkContainer to='/pokemon' onClick={ () => this.requestAllPokemon() }>
-                <NavItem>All Pokemon</NavItem>
+              <LinkContainer to='/allpokemon' onClick={ () => this.requestAllPokemon() }>
+                <NavItem>
+                  <p>
+                    All Pokemon <Badge className="badge__type-fire">beta</Badge>
+                  </p>
+                </NavItem>
               </LinkContainer>
               <NavItem onClick={ () => this.setState({ collapsestat: !this.state.collapsestat }) }>Filter</NavItem>
             </Nav>

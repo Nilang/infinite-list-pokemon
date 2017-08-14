@@ -34,7 +34,7 @@ export default class Pokemons extends Component {
     if(this.props.pokemons.length === 0){
       this.nextPost = 0;
       this.postSize = 0;
-      this.props.requestAllPokemonUrl('http://pokeapi.salestock.net/api/v2/pokemon/');
+      this.props.requestAllPokemonUrl('https://pokeapi.salestock.net/api/v2/pokemon/');
     }
   }
 

@@ -16,7 +16,7 @@ const PokemonPost = props => {
   return(
     <div id={props.lid}>
       <Panel header={props.name}>
-        <Image className="pokemon_picture" src={props.image.replace('http://pokeapi.salestock.net/media/', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/')} />
+        <Image className="pokemon_picture" src={props.image.replace('https://pokeapi.salestock.net/media/', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/')} />
         <ListGroup>
           <ListGroup2Item label="ID" value={props.id.toString()}/>
           <ListGroup2Item label="Name" value={props.name}/>
