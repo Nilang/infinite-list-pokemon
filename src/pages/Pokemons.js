@@ -20,7 +20,6 @@ export default class Pokemons extends Component {
     this.state={
       posts: []
     };
-    this.postSize = 0;
     this.nextPost = 0;
     console.log("constructor");
   }
@@ -36,8 +35,8 @@ export default class Pokemons extends Component {
   componentDidMount(){
     window.addEventListener('scroll', this.handleScroll);
     console.log("mount");
-    if(this.postSize === 0 && (this.props.pokemons.length !== 0)){
-      console.log(this.props.pokemons);
+    if(this.nextPost === 0 && (this.props.pokemons.length !== 0)){
+      this.postSize = this.props.pokemons.length;
       for(var i=0; i < this.props.initialPost; i++){
         this.requestPost(this.props.pokemons[this.nextPost].url);
       }
@@ -51,12 +50,8 @@ export default class Pokemons extends Component {
 
   requestPost = (pokeUrl) => {
     this.state.posts.push(
-      <Pokemon key={pokeUrl} pokeUrl={pokeUrl}/>
+      <Pokemon key={this.nextPost} pokeUrl={pokeUrl}/>
     );
-    // this.state.posts.push(
-    //   <div key={"post"+this.nextPost}>{pokeUrl}</div>
-    // );
-    this.postSize++;
     this.nextPost++;
   };
 
@@ -66,7 +61,15 @@ export default class Pokemons extends Component {
 
   handleScroll = () => {
     if((document.body.scrollTop+window.innerHeight) === document.body.scrollHeight){
-      // this.props.requestPokemons(this.props.next);
+      if((this.nextPost+this.props.postPerReq) >= this.postSize){
+
+      }else{
+        for(var i=0; i < this.props.initialPost; i++){
+          this.requestPost(this.props.pokemons[this.nextPost].url);
+        }
+        this.setState(this.state);
+        console.log("requestPost");
+      }
     }
   };
 
