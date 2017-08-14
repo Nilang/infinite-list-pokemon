@@ -11,19 +11,20 @@ import {
 } from 'react-router-dom';
 
 // App pages
-import Home from '../pages/Home';
 import Pokemon from '../pages/Pokemon';
 import Pokemons from '../pages/Pokemons';
 import NotFound from '../pages/NotFound';
 
 // App Component
 import Header from '../components/Header';
+import LoadingPage from '../components/LoadingPage';
 
 // App is the main root of pokedex application which control the routing to pages.
 class App extends Component {
 
   // App variables
   next;
+  totalReqUrl;
 
   // App props
   static propTypes = {
@@ -34,7 +35,8 @@ class App extends Component {
   constructor(){
     super();
     this.state = {
-      done: true
+      done: true,
+      progress: 0
     };
   };
 
@@ -51,6 +53,16 @@ class App extends Component {
       .then(response => response.json())
       .then(responseData => {
         this.props.dispatch(PokemonActionCreators.addArrayOfPokemon(responseData.results));
+        this.calculateProgress(responseData.count);
+        // if (this.next === undefined){
+        //   this.totalReqUrl = responseData.count;
+        // }else{
+        //   let hold = this.next.replace('http://pokeapi.salestock.net/api/v2/pokemon/?offset=','');
+        //   let percent = (hold/this.totalReqUrl) * 100;
+        //   this.setState({
+        //     progress: percent
+        //   });
+        // }
         this.next = responseData.next;
         this.requestNextPokemonUrl();
       })
@@ -80,6 +92,18 @@ class App extends Component {
       });
   };
 
+  calculateProgress = (count) => {
+    if (this.next === undefined || this.next === null){
+      this.totalReqUrl = count;
+    }else{
+      let hold = this.next.replace('http://pokeapi.salestock.net/api/v2/pokemon/?offset=','');
+      let percent = (hold/this.totalReqUrl) * 100;
+      this.setState({
+        progress: percent
+      });
+    }
+  };
+
   // App render
   render(){
     // const for use of redux actioncreators on component.
@@ -87,7 +111,6 @@ class App extends Component {
     const clearPokemon = bindActionCreators(PokemonActionCreators.clearPokemon, dispatch);
 
     if(this.state.done){
-
       return(
         <div>
           <BrowserRouter>
@@ -96,21 +119,20 @@ class App extends Component {
               <Switch>
                 <Route exact path="/" component={ (props) => <Pokemons {...props} pokemons={pokemons} postPerReq={3} initialPost={3}/> }/>
                 <Route path="/pokemon/:id" component={Pokemon} />
+                <Route path="/loading/" component={LoadingPage} />
                 <Route component={NotFound} />
               </Switch>
             </div>
           </BrowserRouter>
         </div>
       );
-
-    }else{
-
-      return(
-        <div>Loading...</div>
-      );
-
     }
 
+    return(
+      <div className="main_container">
+        <LoadingPage progress={this.state.progress}/>
+      </div>
+    );
   }
 };
 

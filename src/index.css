@@ -21,6 +21,11 @@ body {
   text-align: center;
 }
 
+.loading_title{
+  text-align: center;
+  margin-top: 0;
+}
+
 .progress{
   margin: 0;
 }
