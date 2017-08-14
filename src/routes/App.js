@@ -41,11 +41,6 @@ class App extends Component {
     };
   };
 
-  // App component implemetation
-  componentWillMount(){
-    // this.requestAllPokemonUrl('http://pokeapi.salestock.net/api/v2/pokemon/');
-  }
-
   // App functions
   // Fetch data from server for 20 url per request over and over till done.
   requestAllPokemonUrl = (targetUrl) =>{
@@ -70,7 +65,7 @@ class App extends Component {
       this.setState({done:true});
     }
   };
-  // Fetch data from server one time.
+  // Fetch data from server one time. use for list of pokemon.
   requestPokemonUrl = (targetUrl) => {
     let url;
     if (targetUrl === null || targetUrl === undefined){
@@ -106,7 +101,7 @@ class App extends Component {
       this.totalReqUrl = count;
     }else{
       let hold = this.next.replace('http://pokeapi.salestock.net/api/v2/pokemon/?offset=','');
-      let percent = (hold/this.totalReqUrl) * 100;
+      let percent = (hold/count) * 100;
       if (this.refs.progress) {
         this.setState({
           progress: percent

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { LinkContainer } from 'react-router-bootstrap';
 import {Link} from 'react-router-dom';
 import {
   Collapse,
@@ -44,10 +45,16 @@ export default class Header extends Component {
   onSelectChange = (event) => {
     let typeUrl = event.target.value;
     if(typeUrl === "all"){
-      this.props.clearPokemon();
-      this.props.requestAllPokemonUrl("http://pokeapi.salestock.net/api/v2/pokemon/");
+      this.requestAllPokemon();
     }else{
       this.props.requestPokemonUrlByType(typeUrl);
+    }
+  };
+
+  requestAllPokemon = () => {
+    if(this.props.urlStat !== 1){
+      this.props.clearPokemon();
+      this.props.requestAllPokemonUrl("http://pokeapi.salestock.net/api/v2/pokemon/");
     }
   };
 
@@ -69,6 +76,9 @@ export default class Header extends Component {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav pullRight>
+              <LinkContainer to='/pokemon' onClick={ () => this.requestAllPokemon() }>
+                <NavItem>All Pokemon</NavItem>
+              </LinkContainer>
               <NavItem onClick={ () => this.setState({ collapsestat: !this.state.collapsestat }) }>Filter</NavItem>
             </Nav>
           </Navbar.Collapse>
