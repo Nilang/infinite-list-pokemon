@@ -15,9 +15,8 @@ import {
 export default class Header extends Component {
 
   static propTypes = {
-    refreshPokemons: PropTypes.func.isRequired,
-    clearPokemon: PropTypes.func.isRequired,
-    requestPokemons: PropTypes.func.isRequired
+    requestAllPokemonUrl: PropTypes.func.isRequired,
+    clearPokemon: PropTypes.func.isRequired
   };
 
   constructor(){
@@ -45,7 +44,7 @@ export default class Header extends Component {
     let typeUrl = event.target.value;
     if(typeUrl === "all"){
       this.props.clearPokemon();
-      this.props.requestPokemons("http://pokeapi.salestock.net/api/v2/pokemon/");
+      this.props.requestAllPokemonUrl("http://pokeapi.salestock.net/api/v2/pokemon/");
     }else{
       this.props.refreshPokemons(typeUrl);
     }

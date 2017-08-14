@@ -15,15 +15,13 @@ export default class Pokemons extends Component {
   constructor(){
     super();
     this.state={
-      posts: [],
-      request: false
+      posts: []
     };
     this.nextPost = 0;
     this.postSize = 0;
   }
 
   static propTypes= {
-    requestPokemons: PropTypes.func.isRequired,
     pokemons: PropTypes.array.isRequired,
     initialPost: PropTypes.number.isRequired,
     postPerReq: PropTypes.number.isRequired
@@ -37,10 +35,6 @@ export default class Pokemons extends Component {
   }
 
   componentDidMount(){
-    if(this.state.request){
-      console.log(this.state.posts);
-      console.log("requested");
-    }
     console.log(this.state.posts);
     window.addEventListener('scroll', this.handleScroll);
     if(this.nextPost === 0 && (this.props.pokemons.length !== 0) && (this.props.pokemons.length > this.props.initialPost)){
@@ -64,15 +58,12 @@ export default class Pokemons extends Component {
     this.nextPost++;
   };
 
-  handleButton = () => {
-    // this.props.requestPokemons();
-  };
+  handleButton = () => {}
 
   handleScroll = () => {
     if((document.body.scrollTop+window.innerHeight) === document.body.scrollHeight){
       if((this.nextPost+this.props.postPerReq) >= this.postSize && (this.props.next !== null)){
-        this.props.requestPokemons();
-        this.state.request = true;
+
       }else{
         for(var i=0; i < this.props.initialPost; i++){
           this.requestPost(this.props.pokemons[this.nextPost].url);
