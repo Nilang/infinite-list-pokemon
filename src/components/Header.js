@@ -16,7 +16,8 @@ export default class Header extends Component {
 
   static propTypes = {
     requestAllPokemonUrl: PropTypes.func.isRequired,
-    clearPokemon: PropTypes.func.isRequired
+    clearPokemon: PropTypes.func.isRequired,
+    requestPokemonUrlByType: PropTypes.func.isRequired
   };
 
   constructor(){
@@ -46,7 +47,7 @@ export default class Header extends Component {
       this.props.clearPokemon();
       this.props.requestAllPokemonUrl("http://pokeapi.salestock.net/api/v2/pokemon/");
     }else{
-      this.props.refreshPokemons(typeUrl);
+      this.props.requestPokemonUrlByType(typeUrl);
     }
   };
 
@@ -64,7 +65,8 @@ export default class Header extends Component {
             <Navbar.Brand>
               <Link to="/">Pokedex</Link>
             </Navbar.Brand>
-            <Navbar.Toggle/>          </Navbar.Header>
+            <Navbar.Toggle/>
+          </Navbar.Header>
           <Navbar.Collapse>
             <Nav pullRight>
               <NavItem onClick={ () => this.setState({ collapsestat: !this.state.collapsestat }) }>Filter</NavItem>

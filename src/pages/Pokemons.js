@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { LinkContainer } from 'react-router-bootstrap';
 import {
   Button,
   ListGroup
  } from 'react-bootstrap';
 
+// App Component
 import Pokemon from './Pokemon';
 
 export default class Pokemons extends Component {
@@ -23,6 +25,7 @@ export default class Pokemons extends Component {
 
   static propTypes= {
     pokemons: PropTypes.array.isRequired,
+    requestAllPokemonUrl: PropTypes.func.isRequired,
     initialPost: PropTypes.number.isRequired,
     postPerReq: PropTypes.number.isRequired
   };
@@ -31,19 +34,20 @@ export default class Pokemons extends Component {
     if(this.props.pokemons.length === 0){
       this.nextPost = 0;
       this.postSize = 0;
+      this.props.requestAllPokemonUrl('http://pokeapi.salestock.net/api/v2/pokemon/');
     }
   }
 
   componentDidMount(){
-    console.log(this.state.posts);
     window.addEventListener('scroll', this.handleScroll);
     if(this.nextPost === 0 && (this.props.pokemons.length !== 0) && (this.props.pokemons.length > this.props.initialPost)){
       this.postSize = this.props.pokemons.length;
-      console.log(this.postSize);
       for(var i=0; i < this.props.initialPost; i++){
         this.requestPost(this.props.pokemons[this.nextPost].url);
       }
-      this.setState(this.state);
+      if (this.refs.posts){
+        this.setState(this.state);
+      }
     }
   };
 
@@ -53,7 +57,7 @@ export default class Pokemons extends Component {
 
   requestPost = (pokeUrl) => {
     this.state.posts.push(
-      <Pokemon key={'pokemon'+this.nextPost} pokeUrl={pokeUrl}/>
+      <Pokemon key={pokeUrl} pokeUrl={pokeUrl}/>
     );
     this.nextPost++;
   };
@@ -68,7 +72,9 @@ export default class Pokemons extends Component {
         for(var i=0; i < this.props.initialPost; i++){
           this.requestPost(this.props.pokemons[this.nextPost].url);
         }
-        this.setState(this.state);
+        if (this.refs.posts){
+          this.setState(this.state);
+        }
       }
     }
   };
@@ -83,9 +89,9 @@ export default class Pokemons extends Component {
 
     return(
       <div>
-        <ListGroup>
+        <div ref="posts">
           {this.state.posts}
-        </ListGroup>
+        </div>
         <div className="footer_container">
           <Button ref="button_more" onClick={this.handleButton.bind(this)}>See more</Button>
         </div>

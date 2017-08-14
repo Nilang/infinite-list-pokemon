@@ -10,15 +10,12 @@ export default function Pokemon(state=initialState, action){
         ...action.pokemons
       ];
 
-    case PokemonActionTypes.ADD_ARRAY_OF_POKEMON_TYPE:
+    case PokemonActionTypes.NEW_ARRAY_OF_POKEMON_TYPE:
       let pokemons = [];
       for (var i = 0; i < action.pokemonsType.length; i++){
         pokemons.push(action.pokemonsType[i].pokemon);
       }
-      return[
-        ...state,
-        ...pokemons
-      ];
+      return pokemons;
 
     case PokemonActionTypes.ADD_POKEMON:
     return[

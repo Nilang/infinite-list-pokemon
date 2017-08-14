@@ -14,9 +14,9 @@ export const addArrayOfPokemon = pokemons => {
   };
 };
 
-export const addArrayOfPokemonType = pokemonsType => {
+export const newArrayOfPokemonType = pokemonsType => {
   return{
-    type: PokemonActionTypes.ADD_ARRAY_OF_POKEMON_TYPE,
+    type: PokemonActionTypes.NEW_ARRAY_OF_POKEMON_TYPE,
     pokemonsType
   };
 };

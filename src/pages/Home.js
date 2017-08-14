@@ -9,10 +9,20 @@ import {
 
 export default class Home extends Component {
 
-  static propTypes= {
-    requestNextPokemonUrl: PropTypes.func.isRequired,
-    pokemons: PropTypes.array.isRequired
+  constructor(){
+    super();
   };
+
+  static propTypes= {
+    pokemons: PropTypes.array.isRequired,
+    requestPokemonUrl: PropTypes.func.isRequired
+  };
+
+  componentWillMount(){
+    if(this.props.pokemons.length === 0){
+      this.props.requestPokemonUrl('http://pokeapi.salestock.net/api/v2/pokemon/');
+    }
+  }
 
   componentDidMount(){
     window.addEventListener('scroll', this.handleScroll);
@@ -23,17 +33,12 @@ export default class Home extends Component {
   };
 
   handleButton = () => {
-    this.props.requestNextPokemonUrl();
+    this.props.requestPokemonUrl();
   };
 
   handleScroll = () => {
-    // console.log("innerH, "+window.innerHeight);
-    // console.log("scrollY, "+window.scrollY);
-    // console.log("offset, "+document.body.offsetHeight);
-    // console.log("dscrolltop ,"+document.body.scrollTop);
-    // console.log("dscrollheight ,"+document.body.scrollHeight);
     if((document.body.scrollTop+window.innerHeight) === document.body.scrollHeight){
-      this.props.requestNextPokemonUrl();
+      this.props.requestPokemonUrl();
     }
   };
 
@@ -50,9 +55,6 @@ export default class Home extends Component {
                   </ListGroupItem>
                 </LinkContainer>
               );
-              // return(
-              //   <Pokemon key="pokemon="+index pokeUrl={pokemon.url}/>
-              // );
             })}
           </ListGroup>
           <div className="footer_container">
