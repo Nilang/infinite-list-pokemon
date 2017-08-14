@@ -14,6 +14,19 @@ export const addArrayOfPokemon = pokemons => {
   };
 };
 
+export const addArrayOfPokemonType = pokemonsType => {
+  return{
+    type: PokemonActionTypes.ADD_ARRAY_OF_POKEMON_TYPE,
+    pokemonsType
+  };
+};
+
+export const refreshPokemons = () => {
+  return {
+    type: PokemonActionTypes.REFRESH_POKEMON
+  }
+};
+
 export const removePokemon = index => {
   return {
     type: PokemonActionTypes.REMOVE_POKEMON,

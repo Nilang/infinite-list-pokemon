@@ -42,7 +42,7 @@ export default class Home extends Component {
   };
 
   render(){
-    if (this.props.pokemons !== undefined) {
+    if (this.props.pokemons.length !== 0) {
       return(
         <div>
           <ListGroup>

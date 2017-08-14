@@ -35,7 +35,6 @@ export default class Header extends Component {
     fetch(targetUrl)
       .then(response => response.json())
       .then(responseData => {
-        console.log(responseData);
         this.setState({
           types: responseData.results
         });

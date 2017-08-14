@@ -36,7 +36,6 @@ class App extends Component {
     fetch(targetUrl)
       .then(response => response.json())
       .then(responseData => {
-        console.log("reqPokemons",responseData);
         this.props.dispatch(PokemonActionCreators.addArrayOfPokemon(responseData.results));
         this.setState({
           next: responseData.next
@@ -52,8 +51,7 @@ class App extends Component {
     fetch(typeUrl)
       .then(response => response.json())
       .then(responseData => {
-        console.log("reqPokemons",responseData);
-        this.props.dispatch(PokemonActionCreators.addArrayOfPokemon(responseData.pokemon));
+        this.props.dispatch(PokemonActionCreators.addArrayOfPokemonType(responseData.pokemon));
       })
       .catch((error) => {
         console.error(error);
@@ -69,9 +67,6 @@ class App extends Component {
     const addPokemon = bindActionCreators(PokemonActionCreators.addPokemon, dispatch);
     const removePokemon = bindActionCreators(PokemonActionCreators.removePokemon, dispatch);
     const clearPokemon = bindActionCreators(PokemonActionCreators.clearPokemon, dispatch);
-
-    console.log("pokemons");
-    console.log(pokemons);
 
     return(
       <div>

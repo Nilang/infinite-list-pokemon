@@ -21,7 +21,6 @@ export default class Pokemons extends Component {
       posts: []
     };
     this.nextPost = 0;
-    console.log("constructor");
   }
 
   static propTypes= {
@@ -32,10 +31,16 @@ export default class Pokemons extends Component {
     postPerReq: PropTypes.number.isRequired
   };
 
+  componentWillMount(){
+    if(this.props.pokemons.length === 0){
+      this.nextPost = 0;
+      this.postSize = 0;
+    }
+  }
+
   componentDidMount(){
     window.addEventListener('scroll', this.handleScroll);
-    console.log("mount");
-    if(this.nextPost === 0 && (this.props.pokemons.length !== 0)){
+    if(this.nextPost === 0 && (this.props.pokemons.length !== 0) && (this.props.pokemons.length > this.props.initialPost)){
       this.postSize = this.props.pokemons.length;
       for(var i=0; i < this.props.initialPost; i++){
         this.requestPost(this.props.pokemons[this.nextPost].url);
@@ -68,7 +73,6 @@ export default class Pokemons extends Component {
           this.requestPost(this.props.pokemons[this.nextPost].url);
         }
         this.setState(this.state);
-        console.log("requestPost");
       }
     }
   };
