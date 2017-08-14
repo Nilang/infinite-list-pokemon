@@ -1,88 +1,92 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import QueryString from 'query-string';
+import { LinkContainer } from 'react-router-bootstrap';
+import {
+  Button,
+  ListGroup,
+  ListGroupItem
+ } from 'react-bootstrap';
 
-// App Component
-import Header from '../components/Header';
-import PokemonPost from '../components/PokemonPost';
+import Pokemon from './Pokemon';
 
-export default class Pokemon extends Component {
+export default class Pokemons extends Component {
+
+  static nextPost;
+  static postSize;
 
   constructor(){
     super();
-    this.state = {
-      pokemons: []
+    this.state={
+      posts: []
     };
+    this.postSize = 0;
+    this.nextPost = 0;
+    console.log("constructor");
   }
 
-  requestPokemon = (targetUrl) => {
-    console.log('request:'+targetUrl);
-    fetch(targetUrl)
-      .then(response => response.json())
-      .then(responseData => {
-        console.log(responseData);
-        this.state.pokemons.push(responseData);
-        this.setState({
-          pokemons: this.state.pokemons,
-         });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
-
-  requestPokemons = (targetUrl) => {
-    fetch(targetUrl)
-      .then(response => response.json())
-      .then(responseData => {
-        console.log(responseData);
-        responseData.results.map((pokemon, index) => {
-          this.requestPokemon(targetUrl+(index+1)+'/');
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+  static propTypes= {
+    requestPokemons: PropTypes.func.isRequired,
+    pokemons: PropTypes.array.isRequired,
+    next: PropTypes.string.isRequired,
+    initialPost: PropTypes.number.isRequired,
+    postPerReq: PropTypes.number.isRequired
   };
 
   componentDidMount(){
-    this.requestPokemons('http://pokeapi.salestock.net/api/v2/pokemon/');
+    window.addEventListener('scroll', this.handleScroll);
+    console.log("mount");
+    if(this.postSize === 0 && (this.props.pokemons.length !== 0)){
+      console.log(this.props.pokemons);
+      for(var i=0; i < this.props.initialPost; i++){
+        this.requestPost(this.props.pokemons[this.nextPost].url);
+      }
+      this.setState(this.state);
+    }
+  };
+
+  componentWillUnmount(){
+    window.removeEventListener('scroll', this.handleScroll);
+  };
+
+  requestPost = (pokeUrl) => {
+    this.state.posts.push(
+      <Pokemon key={pokeUrl} pokeUrl={pokeUrl}/>
+    );
+    // this.state.posts.push(
+    //   <div key={"post"+this.nextPost}>{pokeUrl}</div>
+    // );
+    this.postSize++;
+    this.nextPost++;
+  };
+
+  handleButton = () => {
+    // this.props.requestPokemons(this.props.next);
+  };
+
+  handleScroll = () => {
+    if((document.body.scrollTop+window.innerHeight) === document.body.scrollHeight){
+      // this.props.requestPokemons(this.props.next);
+    }
   };
 
   render(){
-    console.log("render");
-    // let pokepost = null;
-    // if(this.state.pokemon.id != undefined){
-    //   pokepost = <PokemonPost
-    //     id={this.state.pokemon.id}
-    //     name={this.state.pokemon.name}
-    //     image={this.state.pokemon.sprites.front_default}
-    //     base_experience={this.state.pokemon.base_experience}
-    //     height={this.state.pokemon.height}
-    //     />;
-    // }else{
-    //   pokepost = <h5>Loading...</h5>
-    // }
-    return (
+    // Empty pokemon condition
+    if(this.props.pokemons.length === 0){
+      return(
+        <div>Loading...</div>
+      );
+    }
+
+    return(
       <div>
-        <div>
-          <Header />
-        </div>
-        <div>
-          {this.state.pokemons.map((pokemon, index) => {
-            return(
-              <PokemonPost
-                key={index}
-                id={pokemon.id}
-                name={pokemon.name}
-                image={pokemon.sprites.front_default}
-                base_experience={pokemon.base_experience}
-                height={pokemon.height}
-              />
-            );
-           })
-          }
+        <ListGroup>
+          {this.state.posts}
+        </ListGroup>
+        <div className="footer_container">
+          <Button ref="button_more" onClick={this.handleButton.bind(this)}>See more</Button>
         </div>
       </div>
     );
-  }
+  };
 };

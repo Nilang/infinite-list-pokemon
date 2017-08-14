@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 // App Component
-import Header from '../components/Header.js'
+import Header from '../components/Header';
+import Loading from '../components/Loading'
 import PokemonPost from '../components/PokemonPost';
 
 export default class Pokemon extends Component {
@@ -23,9 +24,12 @@ export default class Pokemon extends Component {
       .then(response => response.json())
       .then(responseData => {
         console.log(responseData);
-        this.setState({
+        this.state = {
           pokemon: responseData
-         });
+        };
+        if(this.refs.pokemon){
+          this.setState(this.state);
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -54,14 +58,12 @@ export default class Pokemon extends Component {
         types={this.state.pokemon.types}
         />;
     }else{
-      pokepost = <h5>Loading...</h5>
+      pokepost = <Loading />
     }
 
     return (
-      <div>
-        <div>
-          {pokepost}
-        </div>
+      <div ref="pokemon">
+        {pokepost}
       </div>
     );
   }

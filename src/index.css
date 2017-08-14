@@ -21,8 +21,13 @@ body {
   text-align: center;
 }
 
+.progress{
+  margin: 0;
+}
+
 .badge__type{
-  margin-right: 5px;
+  margin-right: 3px;
+  margin-left: 3px;
   margin-top: 3px;
   font-weight: normal;
   padding: 5px 10px;

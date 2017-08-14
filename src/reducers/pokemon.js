@@ -19,6 +19,12 @@ export default function Pokemon(state=initialState, action){
     case PokemonActionTypes.CLEAR_POKEMON:
       return[];
 
+    case PokemonActionTypes.ADD_ARRAY_OF_POKEMON:
+      return[
+        ...state,
+        ...action.pokemons
+      ];
+
     default:
       return state;
   }
