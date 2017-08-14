@@ -11,7 +11,6 @@ import {
 
 // App pages
 import Home from '../pages/Home';
-import Type from '../pages/Type';
 import Pokemon from '../pages/Pokemon';
 import Pokemons from '../pages/Pokemons';
 import NotFound from '../pages/NotFound';
@@ -21,11 +20,10 @@ import Header from '../components/Header';
 
 class App extends Component {
 
+  next;
+
   constructor(){
     super();
-    this.state = {
-      next: ""
-    };
   };
 
   static propTypes = {
@@ -37,13 +35,15 @@ class App extends Component {
       .then(response => response.json())
       .then(responseData => {
         this.props.dispatch(PokemonActionCreators.addArrayOfPokemon(responseData.results));
-        this.setState({
-          next: responseData.next
-         });
+        this.next = responseData.next;
       })
       .catch((error) => {
         console.error(error);
       });
+  };
+
+  nextPokemons = () => {
+    this.requestPokemons(this.next);
   };
 
   refreshPokemons = (typeUrl) => {
@@ -52,6 +52,7 @@ class App extends Component {
       .then(response => response.json())
       .then(responseData => {
         this.props.dispatch(PokemonActionCreators.addArrayOfPokemonType(responseData.pokemon));
+        this.next = null;
       })
       .catch((error) => {
         console.error(error);
@@ -64,18 +65,15 @@ class App extends Component {
 
   render(){
     const { dispatch, pokemons } = this.props;
-    const addPokemon = bindActionCreators(PokemonActionCreators.addPokemon, dispatch);
-    const removePokemon = bindActionCreators(PokemonActionCreators.removePokemon, dispatch);
     const clearPokemon = bindActionCreators(PokemonActionCreators.clearPokemon, dispatch);
-
     return(
       <div>
         <BrowserRouter>
           <div className="main_container">
             <Header refreshPokemons={this.refreshPokemons.bind(this)} requestPokemons={this.requestPokemons.bind(this)} clearPokemon={clearPokemon} />
             <Switch>
-              <Route exact path="/" component={ (props) => <Home {...props} pokemons={pokemons} requestPokemons={this.requestPokemons.bind(this)} next={this.state.next}/> }/>
-              <Route exact path="/pokemon/" component={ (props) => <Pokemons {...props} pokemons={pokemons} requestPokemons={this.requestPokemons.bind(this)} next={this.state.next} postPerReq={3} initialPost={3}/> }/>
+              <Route exact path="/" component={ (props) => <Home {...props} pokemons={pokemons} requestPokemons={this.nextPokemons.bind(this)}/> }/>
+              <Route key={8732490} exact path="/pokemon/" component={ (props) => <Pokemons {...props} pokemons={pokemons} requestPokemons={this.nextPokemons.bind(this)} postPerReq={3} initialPost={3}/> }/>
               <Route path="/pokemon/:id" component={Pokemon} />
               <Route component={NotFound} />
             </Switch>

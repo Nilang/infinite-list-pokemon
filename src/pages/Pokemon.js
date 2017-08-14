@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 // App Component
-import Header from '../components/Header';
 import Loading from '../components/Loading'
 import PokemonPost from '../components/PokemonPost';
 
@@ -23,7 +22,6 @@ export default class Pokemon extends Component {
     fetch(targetUrl)
       .then(response => response.json())
       .then(responseData => {
-        console.log(responseData);
         this.state = {
           pokemon: responseData
         };
@@ -49,6 +47,7 @@ export default class Pokemon extends Component {
 
     if(this.state.pokemon.id !== undefined){
       pokepost = <PokemonPost
+        key={'pokemon.key'+this.state.pokemon.id}
         id={this.state.pokemon.id}
         name={this.state.pokemon.name}
         image={this.state.pokemon.sprites.front_default}

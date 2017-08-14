@@ -2,15 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {
-  Button,
   Collapse,
   ControlLabel,
   FormControl,
   FormGroup,
-  MenuItem,
   Nav,
   Navbar,
-  NavDropdown,
   NavItem,
   Panel
 } from 'react-bootstrap';

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import QueryString from 'query-string';
 import { LinkContainer } from 'react-router-bootstrap';
 import {
   Button,
@@ -8,14 +7,11 @@ import {
   ListGroupItem
  } from 'react-bootstrap';
 
- import Pokemon from './Pokemon';
-
 export default class Home extends Component {
 
   static propTypes= {
     requestPokemons: PropTypes.func.isRequired,
-    pokemons: PropTypes.array.isRequired,
-    next: PropTypes.string.isRequired
+    pokemons: PropTypes.array.isRequired
   };
 
   componentDidMount(){
@@ -27,7 +23,7 @@ export default class Home extends Component {
   };
 
   handleButton = () => {
-    this.props.requestPokemons(this.props.next);
+    this.props.requestPokemons();
   };
 
   handleScroll = () => {
@@ -37,7 +33,7 @@ export default class Home extends Component {
     // console.log("dscrolltop ,"+document.body.scrollTop);
     // console.log("dscrollheight ,"+document.body.scrollHeight);
     if((document.body.scrollTop+window.innerHeight) === document.body.scrollHeight){
-      this.props.requestPokemons(this.props.next);
+      this.props.requestPokemons();
     }
   };
 

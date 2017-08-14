@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import QueryString from 'query-string';
-import { LinkContainer } from 'react-router-bootstrap';
 import {
   Button,
-  ListGroup,
-  ListGroupItem
+  ListGroup
  } from 'react-bootstrap';
 
 import Pokemon from './Pokemon';
@@ -18,15 +15,16 @@ export default class Pokemons extends Component {
   constructor(){
     super();
     this.state={
-      posts: []
+      posts: [],
+      request: false
     };
     this.nextPost = 0;
+    this.postSize = 0;
   }
 
   static propTypes= {
     requestPokemons: PropTypes.func.isRequired,
     pokemons: PropTypes.array.isRequired,
-    next: PropTypes.string.isRequired,
     initialPost: PropTypes.number.isRequired,
     postPerReq: PropTypes.number.isRequired
   };
@@ -39,9 +37,15 @@ export default class Pokemons extends Component {
   }
 
   componentDidMount(){
+    if(this.state.request){
+      console.log(this.state.posts);
+      console.log("requested");
+    }
+    console.log(this.state.posts);
     window.addEventListener('scroll', this.handleScroll);
     if(this.nextPost === 0 && (this.props.pokemons.length !== 0) && (this.props.pokemons.length > this.props.initialPost)){
       this.postSize = this.props.pokemons.length;
+      console.log(this.postSize);
       for(var i=0; i < this.props.initialPost; i++){
         this.requestPost(this.props.pokemons[this.nextPost].url);
       }
@@ -55,19 +59,20 @@ export default class Pokemons extends Component {
 
   requestPost = (pokeUrl) => {
     this.state.posts.push(
-      <Pokemon key={this.nextPost} pokeUrl={pokeUrl}/>
+      <Pokemon key={'pokemon'+this.nextPost} pokeUrl={pokeUrl}/>
     );
     this.nextPost++;
   };
 
   handleButton = () => {
-    // this.props.requestPokemons(this.props.next);
+    // this.props.requestPokemons();
   };
 
   handleScroll = () => {
     if((document.body.scrollTop+window.innerHeight) === document.body.scrollHeight){
-      if((this.nextPost+this.props.postPerReq) >= this.postSize){
-
+      if((this.nextPost+this.props.postPerReq) >= this.postSize && (this.props.next !== null)){
+        this.props.requestPokemons();
+        this.state.request = true;
       }else{
         for(var i=0; i < this.props.initialPost; i++){
           this.requestPost(this.props.pokemons[this.nextPost].url);
