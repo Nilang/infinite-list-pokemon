@@ -9,10 +9,6 @@ import {
 
 export default class Home extends Component {
 
-  constructor(){
-    super();
-  };
-
   static propTypes= {
     pokemons: PropTypes.array.isRequired,
     requestPokemonUrl: PropTypes.func.isRequired
@@ -20,7 +16,7 @@ export default class Home extends Component {
 
   componentWillMount(){
     if(this.props.pokemons.length === 0){
-      this.props.requestPokemonUrl('https://pokeapi.salestock.net/api/v2/pokemon/');
+      this.props.requestPokemonUrl('http://pokeapi.salestock.net/api/v2/pokemon/');
     }
   }
 
@@ -49,7 +45,7 @@ export default class Home extends Component {
           <ListGroup>
             {this.props.pokemons.map((pokemon, index) => {
               return(
-                <LinkContainer key={index} to={pokemon.url.replace('https://pokeapi.salestock.net/api/v2','')}>
+                <LinkContainer key={index} to={pokemon.url.replace('http://pokeapi.salestock.net/api/v2','')}>
                   <ListGroupItem>
                     {pokemon.name}
                   </ListGroupItem>

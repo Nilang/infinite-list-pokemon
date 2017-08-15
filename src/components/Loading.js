@@ -2,7 +2,6 @@ import React from 'react';
 
 import {
   ListGroup,
-  Panel,
   ProgressBar,
   Well
   } from 'react-bootstrap';

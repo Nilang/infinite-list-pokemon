@@ -1,13 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import {
   ProgressBar,
   Panel
   } from 'react-bootstrap';
-
-// App Component
-import ListGroup2Item from './ListGroup2Item';
 
 const Loading = (props) => {
   return(

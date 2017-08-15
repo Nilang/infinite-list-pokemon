@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { LinkContainer } from 'react-router-bootstrap';
 import {
-  Button,
-  ListGroup
+  Button
  } from 'react-bootstrap';
 
 // App Component
 import Pokemon from './Pokemon';
 
-export default class Pokemons extends Component {
+export default class AllPokemon extends Component {
 
   static nextPost;
   static postSize;
@@ -34,7 +32,7 @@ export default class Pokemons extends Component {
     if(this.props.pokemons.length === 0){
       this.nextPost = 0;
       this.postSize = 0;
-      this.props.requestAllPokemonUrl('https://pokeapi.salestock.net/api/v2/pokemon/');
+      this.props.requestAllPokemonUrl('http://pokeapi.salestock.net/api/v2/pokemon/');
     }
   }
 

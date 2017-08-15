@@ -55,12 +55,12 @@ export default class Header extends Component {
   requestAllPokemon = () => {
     if(this.props.urlStat !== 1){
       this.props.clearPokemon();
-      this.props.requestAllPokemonUrl("https://pokeapi.salestock.net/api/v2/pokemon/");
+      this.props.requestAllPokemonUrl("http://pokeapi.salestock.net/api/v2/pokemon/");
     }
   };
 
   componentDidMount(){
-    this.requestTypes('https://pokeapi.salestock.net/api/v2/type/');
+    this.requestTypes('http://pokeapi.salestock.net/api/v2/type/');
   };
 
 
