@@ -5,12 +5,15 @@ import PropTypes from 'prop-types';
 import Loading from '../components/Loading'
 import PokemonPost from '../components/PokemonPost';
 
+// Pokemon is component to render pokemon profile. It have responsibilities to fetch the data.
 export default class Pokemon extends Component {
 
+  // App props
   static propTypes = {
     pokeUrl: PropTypes.string
   };
 
+  // App constructor
   constructor(){
     super();
     this.state = {
@@ -18,6 +21,7 @@ export default class Pokemon extends Component {
     };
   }
 
+  // Function which fetched pokemon profile's data from server.
   requestPokemon = (targetUrl) => {
     fetch(targetUrl)
       .then(response => response.json())
@@ -34,6 +38,8 @@ export default class Pokemon extends Component {
       });
   };
 
+  // Override Component functions
+  // Called after render
   componentDidMount(){
     if(this.props.match !== undefined){
       this.requestPokemon('http://pokeapi.salestock.net/api/v2/pokemon/'+this.props.match.params.id+'/');
@@ -42,9 +48,11 @@ export default class Pokemon extends Component {
     }
   };
 
+  // App render
   render(){
     let pokepost = null;
 
+    // pokemon's state exist
     if(this.state.pokemon.id !== undefined){
       pokepost = <PokemonPost
         key={'pokemon.key'+this.state.pokemon.id}
@@ -56,6 +64,7 @@ export default class Pokemon extends Component {
         weight={this.state.pokemon.weight}
         types={this.state.pokemon.types}
         />;
+    // pokemon's state doesnt exist
     }else{
       pokepost = <Loading />
     }

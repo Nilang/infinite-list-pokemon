@@ -7,27 +7,32 @@ import {
 // App Component
 import Pokemon from './Pokemon';
 
+// AllPokemon is component that have infinite list of pokemon's profile. It's have responsibility to call all pokemon's url and pass the url to be used by Pokemon component. This component have responsibility to call Pokemon profile corresponding on number of profile per request.
 export default class AllPokemon extends Component {
 
-  static nextPost;
-  static postSize;
+  static nextPost;    // Store the index
+  static postSize;    // Store total post at given time
 
+  // App constructor
   constructor(){
     super();
     this.state={
-      posts: []
+      posts: []     // Store the rendered post
     };
     this.nextPost = 0;
     this.postSize = 0;
   }
 
+  // App props
   static propTypes= {
-    pokemons: PropTypes.array.isRequired,
-    requestAllPokemonUrl: PropTypes.func.isRequired,
-    initialPost: PropTypes.number.isRequired,
-    postPerReq: PropTypes.number.isRequired
+    pokemons: PropTypes.array.isRequired,             // Store pokemon's url data
+    requestAllPokemonUrl: PropTypes.func.isRequired,  // Function to request all pokemon data, passed from App
+    initialPost: PropTypes.number.isRequired,         // Number of pokemon's profile that posted on initial request
+    postPerReq: PropTypes.number.isRequired           // Number of pokemon's profile per request
   };
 
+  // Override Component functions
+  // Called before render
   componentWillMount(){
     if(this.props.pokemons.length === 0){
       this.nextPost = 0;
@@ -36,6 +41,7 @@ export default class AllPokemon extends Component {
     }
   }
 
+  // Called after render
   componentDidMount(){
     window.addEventListener('scroll', this.handleScroll);
     if(this.nextPost === 0 && (this.props.pokemons.length !== 0) && (this.props.pokemons.length > this.props.initialPost)){
@@ -49,10 +55,12 @@ export default class AllPokemon extends Component {
     }
   };
 
+  // Called on render unmount
   componentWillUnmount(){
     window.removeEventListener('scroll', this.handleScroll);
   };
 
+  // Let pokemon component to request the pokemon's profile at url given
   requestPost = (pokeUrl) => {
     this.state.posts.push(
       <Pokemon key={pokeUrl} pokeUrl={pokeUrl}/>
@@ -60,8 +68,10 @@ export default class AllPokemon extends Component {
     this.nextPost++;
   };
 
+  // Button event
   handleButton = () => {}
 
+  // Scroll event
   handleScroll = () => {
     if((document.body.scrollTop+window.innerHeight) === document.body.scrollHeight){
       if((this.nextPost+this.props.postPerReq) >= this.postSize && (this.props.next !== null)){
@@ -77,6 +87,7 @@ export default class AllPokemon extends Component {
     }
   };
 
+  // App render
   render(){
     // Empty pokemon condition
     if(this.props.pokemons.length === 0){

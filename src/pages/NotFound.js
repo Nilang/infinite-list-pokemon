@@ -1,7 +1,9 @@
+// Library
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Jumbotron } from 'react-bootstrap';
 
+// not found is component called when the route didn't find match path.
 const NotFound = () => {
   return(
     <Jumbotron>
