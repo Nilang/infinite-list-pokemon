@@ -36,6 +36,7 @@ User can use filter by type and show them all pokemon corresponding with that ty
 There're several problems in working on this project which i hope can be learned by another react's developer specially when you're new into this project.
 - React have different methodology in mind compare to MVC web development.
 - Cross server communication problem known as CROS in react.
+- The Poke-API doesn't allow user to request multiple pokemon's data at one request, instead we need to request the url first then fetch the data from it.
 
 ### Conclusion
 React is a powerful framework, but writing in react can be complex enough as it is. You need to understanding design principles of react. React has several key features like component, state, and props. You need to design, which component you'll be create and which state and props will be pass trough the components, and that's it will be very important and you can be frustated when you didn't have clear design in mind since the methodology is different as standard MVC web development.
